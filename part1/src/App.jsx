@@ -4,12 +4,12 @@ import { useState } from 'react'
 const Header = ({course}) => <h1>{course}</h1>
 
 // Content Component
-const Content = ({part, exercise}) => {
+const Content = ({part1, exercises1, part2, exercises2, part3, exercises3}) => {
   return(
     <>
-     <p>
-        {part} {exercise}
-      </p>
+      <Part part={part1} exercise={exercises1} />
+      <Part part={part2} exercise={exercises2} />
+      <Part part={part3} exercise={exercises3} />
     </>
   )
 }
@@ -19,6 +19,18 @@ const Total = ({exercises1, exercises2, exercises3}) => {
   return ( 
     <>
     <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+    </>
+  )
+}
+
+// Part Component
+
+const Part = ({part, exercise}) => {
+  return(
+    <>
+     <p>
+         {part} {exercise}
+      </p>
     </>
   )
 }
@@ -37,9 +49,7 @@ const App = () => {
   return(
     <div>
       <Header course={course}></Header>
-      <Content part={part1} exercise={exercises1}></Content>
-      <Content part={part2} exercise={exercises2}></Content>
-      <Content part={part3} exercise={exercises3}></Content>
+      <Content part1={part1} exercises1={exercises1} part2={part2} exercises2={exercises2} part3={part3} exercises3={exercises3}></Content>
       <Total exercises1={exercises1} exercises2={exercises2} exercises3={exercises3} />
       
     </div>
