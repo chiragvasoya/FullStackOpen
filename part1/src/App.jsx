@@ -4,15 +4,20 @@ const Header = ({heading}) => <h1>{heading}</h1>
 
 const Button = ({text, handleClick}) => <button onClick={handleClick}>{text}</button>
 
-const Feedback = (props) => {
+const Statistics = (props) => {
   return(
     <>
-      <p>Good {props.good}</p>
-      <p>Bad {props.bad}</p>
-      <p>Neutral {props.neutral}</p>
-      <p>All {props.all}</p>
-      <p>Average {props.all === 0 ? 0 : props.average/props.all}</p>
-      <p>Positive {props.all === 0 ? 0 : props.good/props.all}%</p>
+     <Header heading="Statistics" />
+      {  props.all === 0 ?  <p>No feedback given</p> : 
+        <div>
+            <p>Good {props.good}</p>
+            <p>Bad {props.bad}</p>
+            <p>Neutral {props.neutral}</p>
+            <p>All {props.all}</p>
+            <p>Average {props.average/props.all}</p>
+            <p>Positive {props.good/props.all}%</p>
+      </div>
+      }
     </>
   )
 }
@@ -49,8 +54,8 @@ const App = () => {
       <Button handleClick={handleGood} text="Good"></Button>
       <Button handleClick={handleBad} text="Bad"></Button>
       <Button handleClick={handleNeutral} text="Neutral"></Button>
-      <Header heading="Statastics" />
-      <Feedback good={good} bad={bad} neutral={neutral} all={all} average={average} />
+      <Statistics good={good} bad={bad} neutral={neutral} all={all} average={average} />
+    
 
     </div>
   )
