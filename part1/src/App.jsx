@@ -4,19 +4,31 @@ const Header = ({heading}) => <h1>{heading}</h1>
 
 const Button = ({text, handleClick}) => <button onClick={handleClick}>{text}</button>
 
+const StatisticLine = ({text, value, arithmeticSign=''}) =>  {
+  return(
+    <>
+    <tr>
+      <td>{text}</td> 
+      <td>{value} {arithmeticSign}</td>
+    </tr>
+    </>
+    )
+  }
+
 const Statistics = (props) => {
   return(
     <>
      <Header heading="Statistics" />
       {  props.all === 0 ?  <p>No feedback given</p> : 
-        <div>
-            <p>Good {props.good}</p>
-            <p>Bad {props.bad}</p>
-            <p>Neutral {props.neutral}</p>
-            <p>All {props.all}</p>
-            <p>Average {props.average/props.all}</p>
-            <p>Positive {props.good/props.all}%</p>
-      </div>
+        <table>
+            <StatisticLine text="Good" value={props.good} />
+            <StatisticLine text="Neutral" value={props.neutral} />
+            <StatisticLine text="Bad" value={props.bad} />
+            <StatisticLine text="All" value={props.all} />
+            <StatisticLine text="Average" value={(props.average/props.all)} />
+            <StatisticLine text="Positive" value={(props.good/props.all)} arithmeticSign="%" />
+           
+      </table>
       }
     </>
   )
