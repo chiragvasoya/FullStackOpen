@@ -1,38 +1,4 @@
-
-// Header Component
-const Header = ({course}) => <h1>{course.name}</h1>
-
-// Content Component
-const Content = ({parts}) => {
-  
-  return(
-    <>
-      { parts.map((part, i) => <Part key={i} part={part.name} exercise={part.exercises} /> ) }
-      
-    </>
-  )
-}
-
-// Total Component
-const Total = ({exercises}) => {
-  return ( 
-    <>
-    <p>Number of exercises { exercises[0].exercises + exercises[1].exercises + exercises[2].exercises }</p>
-    </>
-  )
-}
-
-// Part Component
-
-const Part = ({part, exercise}) => {
-  return(
-    <>
-     <p>
-         {part} {exercise}
-      </p>
-    </>
-  )
-}
+import Course from "./components/Course"
 
 
 const App = () => {
@@ -55,18 +21,17 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
 
-  return(
-    <div>
-      <Header course={course}></Header>
-      <Content parts={course.parts}  ></Content>
-      <Total exercises={course.parts} /> 
-      
-    </div>
-  )
+  return <Course course={course} />
+   
 }
 
 export default App
