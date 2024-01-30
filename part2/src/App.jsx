@@ -13,11 +13,16 @@ const App = () => {
 
   const addName = (e) => {
     e.preventDefault()
-    const newPerson = {
-      name: newName
+    
+    if(persons.find(person => person.name === newName)) {
+      alert(`${newName} already exists in phonebook`)
+    } else {
+       const newPerson = {
+        name: newName
+      }
+      setPersons(persons.concat(newPerson))
+      setNewName('')
     }
-    setPersons(persons.concat(newPerson))
-    setNewName('')
   }
 
   return(
