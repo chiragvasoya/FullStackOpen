@@ -14,7 +14,7 @@ const App = () => {
   ]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [filteredPersons, setFilteredPersons] = useState(persons)
+  const [filteredPersons, setFilteredPersons] = useState([])
 
   const handleNewName = (e) => {
     setNewName(e.target.value)
@@ -33,7 +33,6 @@ const App = () => {
 
   const addName = (e) => {
     e.preventDefault()
-    console.log(e.target.value)
     if(persons.find(person => person.name === newName)) {
       alert(`${newName} already exists in phonebook`)
     } else {
@@ -61,12 +60,11 @@ const App = () => {
            handleNumber={handleNewNumber} 
            personName={newName}
            personNumber={newNumber}
-           
       /> 
 
       <h2>Numbers</h2>
-      <Persons persons={filteredPersons} />
-      
+      <Persons persons={(filteredPersons.length === 0)?persons:filteredPersons } />
+
     </div>
   )
 }
