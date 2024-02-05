@@ -36,8 +36,17 @@ const App = () => {
 // adding a new name
   const addName = (e) => {
     e.preventDefault()
-    if(persons.find(person => person.name === newName)) {
-      alert(`${newName} already exists in phonebook`)
+    const personExist = persons.find(person => person.name === newName)
+   
+    if(personExist) {
+      confirm(`${newName} already exists in phonebook. Would you like to update number`)
+      const updatedPerson = {...personExist, number: newNumber}
+      console.log("Updated data", updatedPerson)
+      personService.updateOne(personExist.id, updatedPerson)
+      .then(returnedPerson => {
+         setPersons(persons.map(person => person.id !== personExist.id ? person : returnedPerson))
+      })
+      .then()
     } else {
        const newPerson = {
         name: newName,
@@ -52,8 +61,8 @@ const App = () => {
   }
 
     // delete person
-    const handleDelete = (personId) => {
-      confirm(`Are you sure to delete?`)
+    const handleDelete = (personId, personName) => {
+      confirm(`Delete ${personName}?`)
       personService.deleteOne(personId)
       
       const newList = persons.filter(person => personId !== person.id)
@@ -82,7 +91,7 @@ const App = () => {
 
       { persons.map(person => 
          <li key={person.id}>{person.name} {person.number} 
-          <button onClick={()=>handleDelete(person.id)} >Delete</button>  
+          <button onClick={()=>handleDelete(person.id, person.name)} >Delete</button>  
         </li>
          
         ) }
