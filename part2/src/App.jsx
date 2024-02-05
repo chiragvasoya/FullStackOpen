@@ -46,7 +46,8 @@ const App = () => {
       .then(returnedPerson => {
          setPersons(persons.map(person => person.id !== personExist.id ? person : returnedPerson))
       })
-      .then()
+      setNewName("")
+      setNewNumber("")
     } else {
        const newPerson = {
         name: newName,
