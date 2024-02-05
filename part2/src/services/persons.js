@@ -4,12 +4,22 @@ const baseUrl = "http://localhost:3001/persons"
 
 // Get all records
 const getAll = () => {
-    return axios.get(baseUrl)
+    const request = axios.get(baseUrl)
+    return request.then(response=> response.data)
 }
 
 // Add one record
 const createOne = (newObject) => {
-    return axios.post(baseUrl, newObject)
+    const request = axios.post(baseUrl, newObject)
+    return request.then(response => response.data)
 }
 
-export default { getAll, createOne }
+// Delete a record
+
+const deleteOne = (objectId) => {
+    const request = axios.delete(`${baseUrl}/${objectId}`)
+    return request.then(response => response.data)
+}
+
+
+export default { getAll, createOne, deleteOne }
