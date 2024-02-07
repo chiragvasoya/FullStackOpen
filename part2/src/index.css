@@ -1,0 +1,19 @@
+h2 {
+    font-weight: 700;
+}
+
+.error {
+    color: red;
+    background-color: #ffdcdc;
+    border: 1px solid red;
+    padding: 5px;
+    margin: 5px 0;
+}
+
+.success {
+    color: green;
+    background-color: #d4ffd6;
+    border: 1px solid green;
+    padding: 5px;
+    margin: 5px 0;
+}

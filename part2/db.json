@@ -1,24 +1,34 @@
 {
   "persons": [
     {
-      "name": "Ada Lovelace",
-      "number": "1234",
-      "id": "2"
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
-      "id": "3"
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
+      "name": "LED Sign",
+      "number": "134",
       "id": "4"
     },
     {
       "id": "8312",
-      "name": "Arto Hellas",
-      "number": "12345"
+      "name": "LED Controller",
+      "number": "26"
+    },
+    {
+      "id": "2352",
+      "name": "LED Strip",
+      "number": "124"
+    },
+    {
+      "id": "845e",
+      "name": "LED Driver",
+      "number": "23"
+    },
+    {
+      "id": "97e9",
+      "name": "LED Wall washer",
+      "number": "200"
+    },
+    {
+      "id": "7bbd",
+      "name": "LED Dimmer",
+      "number": "12"
     }
   ]
 }

@@ -3,6 +3,7 @@ import Filter from "./components/Filter"
 import PersonForm from "./components/PersonForm"
 import Persons from "./components/Persons"
 import personService from './services/persons'
+import Notification from "./components/Notification"
 
 
 const App = () => {
@@ -11,11 +12,13 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filteredPersons, setFilteredPersons] = useState([])
+  const [errorMsg, setErrorMsg] = useState(null)
+  const [successMsg, setSuccessMsg] = useState(null)
 
  
   useEffect(()=> {
     personService.getAll()
-    .then(personsList=> 
+    .then(personsList => 
        setPersons(personsList)
     )}, [])
 
@@ -28,9 +31,13 @@ const App = () => {
   }
 
   const handleFilterName = (e) => {
-    const filtered = e.target.value
-    const filteredNames = persons.filter(person => person.name.toLowerCase().match(filtered.toLowerCase())) 
-    setFilteredPersons(filteredNames)
+      const filtered = e.target.value
+      if(filtered !== ''){
+        const filteredNames = persons.filter(person => person.name.toLowerCase().match(filtered.toLowerCase())) 
+        setFilteredPersons(filteredNames)
+      }else{
+        setFilteredPersons([])
+      }
   }
 
 // adding a new name
@@ -56,6 +63,7 @@ const App = () => {
       personService.createOne(newPerson)
       .then(returnedPerson => 
         setPersons(persons.concat(returnedPerson)))
+      .catch(error=> console.log(error))
         setNewName("")
         setNewNumber("")
     }
@@ -74,7 +82,10 @@ const App = () => {
   return(
     <div>
      
-       <h2>Phonebook</h2>
+       <h2>Products</h2>
+       
+       <Notification message={errorMsg} />
+
        <Filter handleChange={handleFilterName} />
       
        <h2>Add New</h2>
@@ -87,15 +98,21 @@ const App = () => {
            personNumber={newNumber}
       /> 
 
-      <h2>Numbers</h2>
-      <Persons persons={(filteredPersons.length === 0)?persons:filteredPersons } />
-
-      { persons.map(person => 
-         <li key={person.id}>{person.name} {person.number} 
+      <h2>Product List</h2>
+        
+      { filteredPersons.length !== 0  ?  
+       filteredPersons.map(person => 
+         <li key={person.id}>{person.name} ${person.number} 
+         <button onClick={()=>handleDelete(person.id, person.name)} >Delete</button>  
+        </li>   
+        ) 
+        :
+        persons.map(person => 
+          <li key={person.id}>{person.name} ${person.number} 
           <button onClick={()=>handleDelete(person.id, person.name)} >Delete</button>  
-        </li>
-         
-        ) }
+         </li>   
+         ) 
+      } 
 
     </div>
   )
