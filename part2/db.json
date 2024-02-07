@@ -1,16 +1,6 @@
 {
   "persons": [
     {
-      "name": "LED Sign",
-      "number": "134",
-      "id": "4"
-    },
-    {
-      "id": "8312",
-      "name": "LED Controller",
-      "number": "26"
-    },
-    {
       "id": "2352",
       "name": "LED Strip",
       "number": "124"
@@ -29,6 +19,16 @@
       "id": "7bbd",
       "name": "LED Dimmer",
       "number": "12"
+    },
+    {
+      "id": "5180",
+      "name": "DimTone",
+      "number": "21"
+    },
+    {
+      "id": "8e1a",
+      "name": "DriveTone",
+      "number": "123"
     }
   ]
 }

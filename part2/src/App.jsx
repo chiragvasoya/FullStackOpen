@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import Filter from "./components/Filter"
 import PersonForm from "./components/PersonForm"
-import Persons from "./components/Persons"
 import personService from './services/persons'
 import Notification from "./components/Notification"
 
@@ -11,11 +10,13 @@ const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filterQuery, setFilterQuery] = useState('')
   const [filteredPersons, setFilteredPersons] = useState([])
-  const [errorMsg, setErrorMsg] = useState(null)
-  const [successMsg, setSuccessMsg] = useState(null)
-
+  const [message, setMessage] = useState(null)
+  const [msgType, setMsgType] = useState(null)
  
+  const listToShow = filterQuery.length !== 0 ? persons.filter(person => person.name.toLowerCase().match(filterQuery.toLocaleLowerCase())) : persons
+
   useEffect(()=> {
     personService.getAll()
     .then(personsList => 
@@ -31,13 +32,12 @@ const App = () => {
   }
 
   const handleFilterName = (e) => {
-      const filtered = e.target.value
-      if(filtered !== ''){
-        const filteredNames = persons.filter(person => person.name.toLowerCase().match(filtered.toLowerCase())) 
-        setFilteredPersons(filteredNames)
-      }else{
-        setFilteredPersons([])
-      }
+    setFilterQuery(e.target.value)
+      // const filtered = e.target.value
+      // const newList = persons.filter(person => person.name.toLowerCase().match(filtered.toLowerCase())) 
+      // console.log(newList)
+      // setFilteredPersons(newList)
+   
   }
 
 // adding a new name
@@ -46,7 +46,7 @@ const App = () => {
     const personExist = persons.find(person => person.name === newName)
    
     if(personExist) {
-      confirm(`${newName} already exists in phonebook. Would you like to update number`)
+      confirm(`${newName} already exists in products. Would you like to update price`)
       const updatedPerson = {...personExist, number: newNumber}
       console.log("Updated data", updatedPerson)
       personService.updateOne(personExist.id, updatedPerson)
@@ -63,9 +63,15 @@ const App = () => {
       personService.createOne(newPerson)
       .then(returnedPerson => 
         setPersons(persons.concat(returnedPerson)))
-      .catch(error=> console.log(error))
+        .catch( error => console.log(error))
+        setMessage(`${newPerson.name} Added`)
+        setMsgType("success")
         setNewName("")
         setNewNumber("")
+        setTimeout(() => 
+          setMessage(null)
+        , 5000)
+       
     }
   }
 
@@ -73,6 +79,13 @@ const App = () => {
     const handleDelete = (personId, personName) => {
       confirm(`Delete ${personName}?`)
       personService.deleteOne(personId)
+      // .then(returnedPerson => returnedPerson)
+      .catch(error => 
+        setMessage(`Information of ${personName} has already been removed from server`))
+        setMsgType("error")
+        setTimeout(() => 
+          setMessage(null)
+        , 5000)
       
       const newList = persons.filter(person => personId !== person.id)
       setPersons(newList)
@@ -84,7 +97,7 @@ const App = () => {
      
        <h2>Products</h2>
        
-       <Notification message={errorMsg} />
+       <Notification message={message} type={msgType} />
 
        <Filter handleChange={handleFilterName} />
       
@@ -99,20 +112,13 @@ const App = () => {
       /> 
 
       <h2>Product List</h2>
-        
-      { filteredPersons.length !== 0  ?  
-       filteredPersons.map(person => 
+  
+      { listToShow.map(person => 
          <li key={person.id}>{person.name} ${person.number} 
          <button onClick={()=>handleDelete(person.id, person.name)} >Delete</button>  
         </li>   
         ) 
-        :
-        persons.map(person => 
-          <li key={person.id}>{person.name} ${person.number} 
-          <button onClick={()=>handleDelete(person.id, person.name)} >Delete</button>  
-         </li>   
-         ) 
-      } 
+       }
 
     </div>
   )
